@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="appCell" id="gTV-IL-0wX" customClass="AppImagesCollectionViewCell" customModule="vodafone" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="215" height="264"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="215" height="264"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="T7r-CC-KD3">
+                        <rect key="frame" x="0.0" y="0.0" width="215" height="264"/>
+                    </imageView>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="T7r-CC-KD3" secondAttribute="bottom" id="3DM-rU-I3E"/>
+                <constraint firstItem="T7r-CC-KD3" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="TNN-V3-6HD"/>
+                <constraint firstAttribute="trailing" secondItem="T7r-CC-KD3" secondAttribute="trailing" id="Znc-UP-g4f"/>
+                <constraint firstItem="T7r-CC-KD3" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="f3m-p9-3dI"/>
+            </constraints>
+            <size key="customSize" width="215" height="264"/>
+            <connections>
+                <outlet property="appSSImageView" destination="T7r-CC-KD3" id="YRQ-GT-9nP"/>
+            </connections>
+            <point key="canvasLocation" x="203.81679389312976" y="95.070422535211279"/>
+        </collectionViewCell>
+    </objects>
+</document>
