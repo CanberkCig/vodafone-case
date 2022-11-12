@@ -477,7 +477,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K3b-Cw-rAb">
                                                 <rect key="frame" x="128" y="161.33333333333334" width="245" height="34"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="View in Apple Books">
+                                                <state key="normal" title="View in App Store">
                                                     <color key="titleColor" systemColor="systemBlueColor"/>
                                                 </state>
                                                 <connections>
@@ -934,12 +934,28 @@
                                     <constraint firstItem="FHl-D7-Ndc" firstAttribute="centerX" secondItem="VPT-Pe-PeK" secondAttribute="centerX" id="hOt-VD-HNp"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dnZ-Gc-W1U">
+                                <rect key="frame" x="313" y="50" width="60" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="1Sx-Rg-FDt"/>
+                                    <constraint firstAttribute="width" constant="60" id="E1B-PU-Pdz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title=" Clean">
+                                    <color key="titleColor" systemColor="systemMintColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="cleanFilter" destination="1cs-it-CiM" eventType="touchUpInside" id="aux-rE-XVv"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="PJX-1W-L3n"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="VPT-Pe-PeK" firstAttribute="leading" secondItem="PJX-1W-L3n" secondAttribute="leading" id="4FL-cL-Ebp"/>
                             <constraint firstItem="kBM-XX-tnH" firstAttribute="top" secondItem="Ozr-Uu-Cpo" secondAttribute="top" constant="50" id="BsU-hu-gXB"/>
+                            <constraint firstItem="PJX-1W-L3n" firstAttribute="trailing" secondItem="dnZ-Gc-W1U" secondAttribute="trailing" constant="20" id="C4f-5G-5gh"/>
                             <constraint firstItem="j36-KA-vOX" firstAttribute="top" secondItem="PJX-1W-L3n" secondAttribute="top" constant="50" id="Gnq-We-cip"/>
                             <constraint firstItem="PJX-1W-L3n" firstAttribute="trailing" secondItem="VPT-Pe-PeK" secondAttribute="trailing" id="Gzj-7n-9oy"/>
                             <constraint firstItem="PJX-1W-L3n" firstAttribute="trailing" secondItem="j36-KA-vOX" secondAttribute="trailing" id="KMv-q3-Gsj"/>
@@ -947,6 +963,7 @@
                             <constraint firstItem="kBM-XX-tnH" firstAttribute="leading" secondItem="PJX-1W-L3n" secondAttribute="leading" constant="20" id="XBC-HA-QQz"/>
                             <constraint firstAttribute="bottom" secondItem="VPT-Pe-PeK" secondAttribute="bottom" id="aSP-Mq-mGd"/>
                             <constraint firstItem="j36-KA-vOX" firstAttribute="leading" secondItem="PJX-1W-L3n" secondAttribute="leading" id="jGw-kS-1wV"/>
+                            <constraint firstItem="dnZ-Gc-W1U" firstAttribute="centerY" secondItem="kBM-XX-tnH" secondAttribute="centerY" id="xT2-yn-BKH"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="SgA-5r-XZj"/>
@@ -960,11 +977,12 @@
                         <outlet property="applyButton" destination="FHl-D7-Ndc" id="NsG-Zd-EJO"/>
                         <outlet property="backButton" destination="kBM-XX-tnH" id="Umq-Xi-fED"/>
                         <outlet property="bottomView" destination="VPT-Pe-PeK" id="vJP-FA-xfY"/>
+                        <outlet property="cleanButton" destination="dnZ-Gc-W1U" id="GWS-uc-0Ae"/>
                         <outlet property="filterTableView" destination="j36-KA-vOX" id="o72-2v-L3z"/>
                     </connections>
                 </customObject>
             </objects>
-            <point key="canvasLocation" x="-1141" y="1"/>
+            <point key="canvasLocation" x="-1141.2213740458014" y="0.70422535211267612"/>
         </scene>
     </scenes>
     <resources>
@@ -978,6 +996,9 @@
         </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemMintColor">
+            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -11,11 +11,11 @@ import UIKit
 class FilterSelectionCellViewModel: NSObject {
     
     var catName: String?
-    var isChecked: Bool?
+    var selectedData: [Results]?
     
-    init(catName: String?, isChecked: Bool?) {
+    init(catName: String?, selectedData: [Results]) {
         self.catName = catName
-        self.isChecked = isChecked
+        self.selectedData = selectedData
     }
     
 }
@@ -25,9 +25,7 @@ extension FilterSelectionCellViewModel: FilterSelectionCellDataSource {
         return catName ?? ""
     }
     
-    func isSelectedForCell(_ cell: FilterSelectionTableViewCell) -> Bool {
-        return isChecked ?? false
+    func selectedDataForCell(_ cell: FilterSelectionTableViewCell) -> [Results] {
+        return selectedData ?? []
     }
-    
-    
 }

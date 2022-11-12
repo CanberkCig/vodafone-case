@@ -27,6 +27,11 @@ class BaseViewModel: NSObject {
     var numberOfItemOnPage: Int = 25
     let searchController = UISearchController(searchResultsController: nil)
     var searchResults: SearchResponse?
+    var selectedFilterArray = [Results]()
+    var filteredArray = [Results]()
+    
+    let rightBarButton = UIButton(type: .custom)
+    var isFilterActive: Bool? = false
     
     func setData(vc: BaseViewController, title: String, media: MediaType) {
         self.viewController = vc
@@ -39,14 +44,26 @@ class BaseViewModel: NSObject {
     }
     
     func setRightBarButton() {
-        let rightBarButton = UIButton(type: .custom)
         rightBarButton.contentMode = .scaleAspectFit
-        rightBarButton.setImage(UIImage(named: "ic_filter"), for: .normal)
+        let image = UIImage(named: "ic_filter")?.withRenderingMode(.alwaysTemplate)
+        rightBarButton.setImage(image, for: .normal)
         rightBarButton.setTitle(" Filter", for: .normal)
-        rightBarButton.setTitleColor(.black, for: .normal)
-        rightBarButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(filterTapped)))
+        filterShowAction()
         viewController?.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightBarButton)
         viewController?.navigationItem.rightBarButtonItem?.style = .plain
+    }
+    
+    func filterShowAction() {
+        if searchResults?.results?.count ?? 0 > 0 {
+            rightBarButton.isUserInteractionEnabled = true
+            rightBarButton.tintColor = .black
+            rightBarButton.setTitleColor(.black, for: .normal)
+            rightBarButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(filterTapped)))
+        } else {
+            rightBarButton.isUserInteractionEnabled = false
+            rightBarButton.tintColor = .systemGray3
+            rightBarButton.setTitleColor(.systemGray3, for: .normal)
+        }
     }
     
     func setCollectionViewProperties() {
@@ -69,6 +86,7 @@ class BaseViewModel: NSObject {
     @objc func filterTapped() {
         GlobalHelper.pushController(id: "FilterViewController", self.viewController ?? UIViewController()) { (vc: FilterViewController) in
             vc.data = searchResults?.results
+            vc.selectedFilterArray = selectedFilterArray
             vc.filterViewModel.delegate = self
         }
     }
@@ -103,12 +121,12 @@ extension BaseViewModel: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if searchController.isActive == true && searchController.searchBar.text != "" {
-            if searchResults?.results?.count == 0 {
+            if filteredArray.count == 0 {
                 collectionView.setEmptyMessage("No results", "no_result")
                 return 0
             } else {
                 collectionView.restore()
-                return searchResults?.results?.count ?? 0
+                return filteredArray.count
             }
         } else {
             collectionView.setEmptyMessage("Find something", "find")
@@ -123,7 +141,7 @@ extension BaseViewModel: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath as IndexPath) as! SearchResultCollectionViewCell
         if searchController.isActive == true && searchController.searchBar.text != "" {
-            let hobbiesListHeaderViewModel = SearchResultCollectionViewCellModel.init(result: searchResults?.results?[indexPath.row] ?? .init())
+            let hobbiesListHeaderViewModel = SearchResultCollectionViewCellModel.init(result: filteredArray[indexPath.row])
             cell.dataSource = hobbiesListHeaderViewModel
             cell.reloadData()
         }
@@ -135,19 +153,35 @@ extension BaseViewModel: UICollectionViewDataSource, UICollectionViewDelegate {
         switch media {
         case .movie:
             GlobalHelper.pushController(id: "MediaDetailScreenViewController", self.viewController ?? UIViewController()) { (vc: MediaDetailScreenViewController) in
-                vc.data = searchResults?.results?[indexPath.row]
+                if isFilterActive == true {
+                    vc.data = filteredArray[indexPath.row]
+                } else {
+                    vc.data = searchResults?.results?[indexPath.row]
+                }
             }
         case .music:
             GlobalHelper.pushController(id: "MediaDetailScreenViewController", self.viewController ?? UIViewController()) { (vc: MediaDetailScreenViewController) in
-                vc.data = searchResults?.results?[indexPath.row]
+                if isFilterActive == true {
+                    vc.data = filteredArray[indexPath.row]
+                } else {
+                    vc.data = searchResults?.results?[indexPath.row]
+                }
             }
         case .app:
             GlobalHelper.pushController(id: "AppDetailScreenViewController", self.viewController ?? UIViewController()) { (vc: AppDetailScreenViewController) in
-                vc.data = searchResults?.results?[indexPath.row]
+                if isFilterActive == true {
+                    vc.data = filteredArray[indexPath.row]
+                } else {
+                    vc.data = searchResults?.results?[indexPath.row]
+                }
             }
         case .book:
             GlobalHelper.pushController(id: "BookDetailScreenViewController", self.viewController ?? UIViewController()) { (vc: BookDetailScreenViewController) in
-                vc.data = searchResults?.results?[indexPath.row]
+                if isFilterActive == true {
+                    vc.data = filteredArray[indexPath.row]
+                } else {
+                    vc.data = searchResults?.results?[indexPath.row]
+                }
             }
         case .none:
             print("none")
@@ -169,6 +203,7 @@ extension BaseViewModel: UISearchBarDelegate {
     }
     
     @objc func refreshText() {
+        isFilterActive = false
         guard let text = searchController.searchBar.text else { return }
         searchAPI(text: text)
     }
@@ -176,6 +211,8 @@ extension BaseViewModel: UISearchBarDelegate {
     func searchAPI(text: String) {
         API.shared.getItems(keyword: text, limit: numberOfItemOnPage, mediaType: media?.rawValue ?? "") { responseModel in
             self.searchResults = responseModel
+            self.filteredArray = responseModel.results ?? []
+            self.filterShowAction()
             self.hobbiesCollectionView.reloadData()
         }
     }
@@ -183,8 +220,10 @@ extension BaseViewModel: UISearchBarDelegate {
 
 extension BaseViewModel: ApplySelectedDelegate {
     func selectedCategories(categories: [String]) {
-        let a = searchResults?.results?.filter{ categories.contains($0.primaryGenreName ?? "") }
-        searchResults?.results = a
+        isFilterActive = true
+        let selectedCategories = searchResults?.results?.filter{ categories.contains($0.primaryGenreName ?? "") }
+        selectedFilterArray = selectedCategories ?? []
+        filteredArray = selectedCategories ?? []
         hobbiesCollectionView.reloadData()
     }
 }

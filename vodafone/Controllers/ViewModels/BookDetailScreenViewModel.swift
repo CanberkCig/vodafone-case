@@ -38,10 +38,10 @@ class BookDetailScreenViewModel: NSObject {
         let addArtistNameTap = UITapGestureRecognizer(target: self, action: #selector(showArtistPage))
         artistNameLabel.addGestureRecognizer(addArtistNameTap)
         
-        if let price = data.collectionPrice {
-            priceLabel.text = "\(price)" + " " + (data.currency ?? "")
+        if let price = data.formattedPrice {
+            priceLabel.text = "\(price)"
         } else {
-            priceLabel.text = "FREE"
+            priceLabel.text = "\(data.collectionPrice ?? 0)" + " " + (data.currency ?? "")
         }
         
         if let image = data.artworkUrl100 {

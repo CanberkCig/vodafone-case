@@ -11,10 +11,11 @@ class FilterViewController: BaseViewController {
     
     @IBOutlet weak var filterViewModel: FilterViewModel!
     var data: [Results]?
+    var selectedFilterArray = [Results]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        filterViewModel.setLayouts(vc: self, data: data ?? [Results]())
+        filterViewModel.setLayouts(vc: self, data: data ?? [Results](), selectedFilterArray: selectedFilterArray)
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -11,10 +11,11 @@ class FilterSelectionViewController: BaseViewController {
     
     @IBOutlet weak var filterSelectionViewModel: FilterSelectionViewModel!
     var categoryChilds = [String]()
+    var selectedFilterArray = [Results]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        filterSelectionViewModel.setValues(childNames: categoryChilds, vc: self)
+        filterSelectionViewModel.setValues(childNames: categoryChilds, vc: self, selectedFilterArray: selectedFilterArray)
     }
     
     override func viewWillAppear(_ animated: Bool) {

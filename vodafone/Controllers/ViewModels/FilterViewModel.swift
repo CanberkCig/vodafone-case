@@ -26,10 +26,12 @@ class FilterViewModel: NSObject {
     var selectedCategories = [String]()
     var delegate: ApplySelectedDelegate?
     var catNames: [String] = ["Categories", "Countries"]
+    var selectedFilterArray = [Results]()
     
-    func setLayouts(vc: BaseViewController, data: [Results]) {
+    func setLayouts(vc: BaseViewController, data: [Results], selectedFilterArray: [Results]) {
         self.vc = vc
         self.data = data
+        self.selectedFilterArray = selectedFilterArray
         bottomView.addShadow(location: .top)
         applyButton.setCornerRadius(10)
         categoryView.reloadData(name: "Categories", value: selectedCategories.joined(separator: ", "))
@@ -58,6 +60,7 @@ class FilterViewModel: NSObject {
     @objc func categoryTapped(_ sender: UITapGestureRecognizer? = nil) {
         GlobalHelper.pushController(id: "FilterSelectionViewController", self.vc ?? UIViewController()) { (vc: FilterSelectionViewController) in
             vc.categoryChilds = uniqueCatNames
+            vc.selectedFilterArray = selectedFilterArray
             vc.filterSelectionViewModel.delegate = self
         }
     }

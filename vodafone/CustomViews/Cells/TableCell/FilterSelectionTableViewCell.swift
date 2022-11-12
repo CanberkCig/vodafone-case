@@ -9,7 +9,7 @@ import UIKit
 
 protocol FilterSelectionCellDataSource {
     func nameForCell(_ cell: FilterSelectionTableViewCell) -> String
-    func isSelectedForCell(_ cell: FilterSelectionTableViewCell) -> Bool
+    func selectedDataForCell(_ cell: FilterSelectionTableViewCell) -> [Results]
 }
 
 class FilterSelectionTableViewCell: UITableViewCell {
@@ -25,9 +25,13 @@ class FilterSelectionTableViewCell: UITableViewCell {
     
     func reloadData(){
         guard let name = dataSource?.nameForCell(self) else { return }
-        guard let isSelected = dataSource?.isSelectedForCell(self) else { return }
         valueName.text = name
-        checkBox.isChecked = isSelected
+        guard let data = dataSource?.selectedDataForCell(self) else { return }
+        if data.contains(where: { $0.primaryGenreName == name }) {
+            checkBox.isChecked = true
+        } else {
+            checkBox.isChecked = false
+        }
     }
     
 }
